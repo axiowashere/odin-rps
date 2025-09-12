@@ -8,6 +8,7 @@
 </head>
 <body>
     <h1> Rock Paper Scissors </h1>
+    <h1 id="winText"></h1>
     <div id="rps-buttons">
         <button id="rock"> Rock </button>
         <button id="paper"> Paper </button>
@@ -27,6 +28,7 @@
         let roundNumber = 0;
         const scoreLog = document.querySelector("#scoreLog")
         const scoreTab = document.querySelector(".scoreTab")
+        const gameWinText = document.querySelector("#winText")
         function playRound(humanChoice, computerChoice){
             roundNumber++;
             if (computerChoice == 'rock'){
@@ -107,7 +109,17 @@
             scoreDiv.append(choiceText)
             scoreDiv.append(winText)
             scoreLog.append(scoreDiv)
-
+            if (humanScore == 5 || computerScore == 5){
+                for (const button of menu.children){
+                    button.disabled = true;
+                }
+                if (humanScore == 5){
+                    gameWinText.textContent = "You WIN!";
+                }
+                if (computerScore == 5){
+                    gameWinText.textContent = "You LOSE!";
+                }
+            }
         });
 
         const reset = document.querySelector("#reset")
@@ -118,6 +130,10 @@
             computerScore = 0;
             scoreTab.textContent = "Player: " + humanScore + " | Computer: " + computerScore;
             roundNumber = 0;
+            gameWinText.textContent = "";
+            for (const button of menu.children){
+                    button.disabled = false;
+            }
         });
     </script>
 </body>
