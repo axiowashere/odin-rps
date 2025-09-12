@@ -14,18 +14,21 @@
         <button id="scissors"> Scissors </button>
     </div>
     <h3> Results </h3>
-    <div class="score">
-    </div>
-    <div id="scoreTab"> </div>
+    <div class="scoreTab">Player: 0 | Computer: 0</div>
+    <button id ="reset"> Reset </button>
+    <h3> Score Log </h3>
+    <div id="scoreLog"> </div>
 
     <script>
         console.log("Hello World")
 
         let humanScore = 0
         let computerScore = 0
-        const scoreTab = document.querySelector("#scoreTab")
-
+        let roundNumber = 0;
+        const scoreLog = document.querySelector("#scoreLog")
+        const scoreTab = document.querySelector(".scoreTab")
         function playRound(humanChoice, computerChoice){
+            roundNumber++;
             if (computerChoice == 'rock'){
                 if (humanChoice == 'paper'){
                     return 'win';
@@ -78,6 +81,9 @@
             let scoreDiv = document.createElement("div");
             scoreDiv.classList.add("score-card");
             
+            let roundText = document.createElement("p");
+            roundText.textContent = "Round #: " + roundNumber;
+            roundText.style.fontWeight = 700;
 
             let choiceText = document.createElement("p");
             choiceText.textContent = "Player chose: " + button.id + " | " + "Computer chose: " + computerSelection;;
@@ -96,12 +102,22 @@
                     winText.textContent = "Tie!";
                     break;
             }
-            scoreText.textContent = "Player: " + humanScore + " | Computer: " + computerScore;
+            scoreTab.textContent = "Player: " + humanScore + " | Computer: " + computerScore;
+            scoreDiv.append(roundText)
             scoreDiv.append(choiceText)
-            scoreDiv.append(scoreText)
             scoreDiv.append(winText)
-            scoreTab.append(scoreDiv)
+            scoreLog.append(scoreDiv)
 
+        });
+
+        const reset = document.querySelector("#reset")
+
+        reset.addEventListener('click',(event)=>{
+            Array.from(scoreLog.children).forEach(child => scoreLog.removeChild(child));
+            humanScore = 0;
+            computerScore = 0;
+            scoreTab.textContent = "Player: " + humanScore + " | Computer: " + computerScore;
+            roundNumber = 0;
         });
     </script>
 </body>

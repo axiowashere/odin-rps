@@ -1,14 +1,22 @@
-#scoreTab{
+#scoreLog{
     display: flex;
     gap: 32px;
     flex-wrap: wrap;
+}
+
+#reset{
+    margin: 8px 0;
+}
+
+.scoreTab{
+    margin-bottom: 16px;
 }
 
 .score-card{
     border: 4px solid #000;
     border-radius: 8px;
     padding: 8px;
-    width: 200px;
+    width: 400px;
 }
 
 button {
