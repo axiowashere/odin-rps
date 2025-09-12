@@ -4,11 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+</head>
+<body>
+    <h1> Rock Paper Scissors </h1>
+    <div id="rps-buttons">
+        <button id="rock"> Rock </button>
+        <button id="paper"> Paper </button>
+        <button id="scissors"> Scissors </button>
+    </div>
+    <h3> Results </h3>
+    <div class="score">
+    </div>
+    <div id="scoreTab"> </div>
+
     <script>
         console.log("Hello World")
 
         let humanScore = 0
         let computerScore = 0
+        const scoreTab = document.querySelector("#scoreTab")
+
+        function playRound(humanChoice, computerChoice){
+            if (computerChoice == 'rock'){
+                if (humanChoice == 'paper'){
+                    return 'win';
+                }else if (humanChoice  == 'scissors'){
+                    return 'loss';
+                }else if (humanChoice == 'rock'){
+                    return 'tie';
+                }
+            } else if (computerChoice == 'paper'){
+                if (humanChoice == 'scissors'){
+                    return 'win';
+                }else if (humanChoice  == 'rock'){
+                    return 'loss';
+                }
+                else if (humanChoice == 'paper'){
+                    console.log('tie!')
+                }
+            } else if (computerChoice == 'scissors'){
+                if (humanChoice == 'rock'){
+                    return 'win';
+                }else if (humanChoice  == 'paper'){
+                    return 'loss';
+                }
+                else if (humanChoice == 'scissors'){
+                    return 'tie';
+                }
+            } else{
+                console.log("unable to process info")
+            }
+            console.log("human score: " + humanScore)
+            console.log("computer score: " + computerScore)
+        }
 
         function getComputerChoice(){
             let random_value = Math.random()
@@ -20,67 +68,43 @@
                 return "scissors";
             }
         }
-        function getHumanChoice(){
-            return window.prompt("Choose rock, paper, or scissors:")
-            // for the sake of simplicity this project is instructed not to implement error handling
-        }
 
-        function playRound(humanChoice, computerChoice){
-            console.log("player choice: " + humanChoice)
-            console.log("computer choice: " + computerChoice)
-            if (computerChoice == 'rock'){
-                if (humanChoice == 'paper'){
-                    console.log('player wins!')
-                    humanScore ++
-                }else if (humanChoice  == 'scissors'){
-                    console.log('computer wins!')
-                    computerScore ++
-                }
-                else if (humanChoice == 'rock'){
-                    console.log('tie!')
-                }
-            } else if (computerChoice == 'paper'){
-                if (humanChoice == 'scissors'){
-                    console.log('player wins!')
-                    humanScore ++
-                }else if (humanChoice  == 'rock'){
-                    console.log('computer wins!')
-                    computerScore ++
-                }
-                else if (humanChoice == 'paper'){
-                    console.log('tie!')
-                }
-            } else if (computerChoice == 'scissors'){
-                if (humanChoice == 'rock'){
-                    console.log('player wins!')
-                    humanScore ++
-                }else if (humanChoice  == 'paper'){
-                    console.log('computer wins!')
-                    computerScore ++
-                }
-                else if (humanChoice == 'scissors'){
-                    console.log('tie!')
-                }
-            } else{
-                console.log("unable to process info")
+        const menu = document.querySelector("#rps-buttons")
+
+        menu.addEventListener('click',(event)=>{
+            let button = event.target;
+            let computerSelection = getComputerChoice();
+            let result = playRound(button.id, computerSelection);
+            let scoreDiv = document.createElement("div");
+            
+
+            let playerText = document.createElement("p");
+            playerText.textContent = "Player chose: " + button.id;
+            let computerText = document.createElement("p");
+            computerText.textContent = "Computer chose: " + computerSelection;
+            let winText = document.createElement("p");
+            let scoreText = document.createElement("p");
+            switch (result){
+                case 'win': 
+                    winText.textContent = "Player wins!"; 
+                    humanScore++;
+                    break; 
+                case 'loss': 
+                    winText.textContent = "Computer wins!";
+                    computerScore++;
+                    break;
+                case 'tie': 
+                    winText.textContent = "Tie!";
+                    break;
             }
-            console.log("human score: " + humanScore)
-            console.log("computer score: " + computerScore)
-        }
+            scoreText.textContent = "Player: " + humanScore + " | Computer: " + computerScore;
+            scoreDiv.append(playerText)
+            scoreDiv.append(computerText)
+            scoreDiv.append(scoreText)
+            scoreDiv.append(winText)
+            scoreTab.append(scoreDiv)
 
-        function playGame(){
-            playRound(getHumanChoice().toLowerCase(), getComputerChoice());
-            playRound(getHumanChoice().toLowerCase(), getComputerChoice());
-            playRound(getHumanChoice().toLowerCase(), getComputerChoice());
-            playRound(getHumanChoice().toLowerCase(), getComputerChoice());
-            playRound(getHumanChoice().toLowerCase(), getComputerChoice());
-        }
-
-        playGame();
+        });
     </script>
-</head>
-<body>
-    <h1> open the console! </h1>
-    <p> use CTRL+SHIFT+C or Inspect Element and refresh the page to see the game via console. This project is not using html display at the moment.</p>
 </body>
 </html>
