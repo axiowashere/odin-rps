@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="./style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -40,7 +41,7 @@
                     return 'loss';
                 }
                 else if (humanChoice == 'paper'){
-                    console.log('tie!')
+                    return 'tie';
                 }
             } else if (computerChoice == 'scissors'){
                 if (humanChoice == 'rock'){
@@ -51,8 +52,6 @@
                 else if (humanChoice == 'scissors'){
                     return 'tie';
                 }
-            } else{
-                console.log("unable to process info")
             }
             console.log("human score: " + humanScore)
             console.log("computer score: " + computerScore)
@@ -73,15 +72,15 @@
 
         menu.addEventListener('click',(event)=>{
             let button = event.target;
+            if (button.id == "rps-buttons") return;
             let computerSelection = getComputerChoice();
             let result = playRound(button.id, computerSelection);
             let scoreDiv = document.createElement("div");
+            scoreDiv.classList.add("score-card");
             
 
-            let playerText = document.createElement("p");
-            playerText.textContent = "Player chose: " + button.id;
-            let computerText = document.createElement("p");
-            computerText.textContent = "Computer chose: " + computerSelection;
+            let choiceText = document.createElement("p");
+            choiceText.textContent = "Player chose: " + button.id + " | " + "Computer chose: " + computerSelection;;
             let winText = document.createElement("p");
             let scoreText = document.createElement("p");
             switch (result){
@@ -98,8 +97,7 @@
                     break;
             }
             scoreText.textContent = "Player: " + humanScore + " | Computer: " + computerScore;
-            scoreDiv.append(playerText)
-            scoreDiv.append(computerText)
+            scoreDiv.append(choiceText)
             scoreDiv.append(scoreText)
             scoreDiv.append(winText)
             scoreTab.append(scoreDiv)
